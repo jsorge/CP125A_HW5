@@ -10,7 +10,8 @@
 
 @interface JMSPersonStore : NSObject
 
-@property (strong, nonatomic)NSMutableArray *people;
+//@property (strong, nonatomic)NSMutableArray *people;
+@property (strong, nonatomic)NSFetchedResultsController *people;
 
 #pragma mark - API
 - (void)sortBirthdaysInAscendingDaysRemaing;

@@ -11,6 +11,7 @@
 		93012ED518AFF445003661CE /* JMSEditPersonTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93012ED418AFF445003661CE /* JMSEditPersonTableViewController.m */; };
 		930847A918B7A6BB00F0B374 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 930847A718B7A6BB00F0B374 /* CoreDataModel.xcdatamodeld */; };
 		930847AC18B7A6E600F0B374 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 930847AB18B7A6E600F0B374 /* Person.m */; };
+		930847AE18B7A88700F0B374 /* fakenames.json in Resources */ = {isa = PBXBuildFile; fileRef = 930847AD18B7A88700F0B374 /* fakenames.json */; };
 		935FA59B18B7A531002C99B5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935FA59A18B7A531002C99B5 /* CoreData.framework */; };
 		93B0988C18AAFAA2006AB460 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B0988B18AAFAA2006AB460 /* Foundation.framework */; };
 		93B0988E18AAFAA2006AB460 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B0988D18AAFAA2006AB460 /* CoreGraphics.framework */; };
@@ -50,6 +51,7 @@
 		930847A818B7A6BB00F0B374 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		930847AA18B7A6E600F0B374 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = Model/Person.h; sourceTree = "<group>"; };
 		930847AB18B7A6E600F0B374 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = Model/Person.m; sourceTree = "<group>"; };
+		930847AD18B7A88700F0B374 /* fakenames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fakenames.json; sourceTree = "<group>"; };
 		935FA59A18B7A531002C99B5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		93B0988818AAFAA2006AB460 /* HW5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HW5.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B0988B18AAFAA2006AB460 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -191,6 +193,7 @@
 		93B0989218AAFAA2006AB460 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				930847AD18B7A88700F0B374 /* fakenames.json */,
 				93C371C118AE6C52007B6972 /* NSDate+UWDateMath.h */,
 				93C371C218AE6C52007B6972 /* NSDate+UWDateMath.m */,
 				93B0989318AAFAA2006AB460 /* HW5-Info.plist */,
@@ -299,6 +302,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93B098A418AAFAA2006AB460 /* Images.xcassets in Resources */,
+				930847AE18B7A88700F0B374 /* fakenames.json in Resources */,
 				93B0989618AAFAA2006AB460 /* InfoPlist.strings in Resources */,
 				93B0989F18AAFAA2006AB460 /* Main.storyboard in Resources */,
 			);
