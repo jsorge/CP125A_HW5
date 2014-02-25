@@ -77,19 +77,20 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
     [self dismissViewControllerAnimated:YES completion:^{
         NSIndexPath *newRow = [NSIndexPath indexPathForRow:[self.store.people indexOfObject:controller.personBirthday] inSection:0];
         
-        [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[newRow] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
     }];
 }
 
 - (void)editPersonViewControllerDidUpdateExisting:(JMSEditPersonTableViewController *)controller
 {
+    NSArray *originalList = [self.store.people copy];
+    
     NSIndexPath *editedRow = [NSIndexPath indexPathForRow:[self.store.people indexOfObject:self.personBeingEdited] inSection:0];
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[editedRow] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
+        
+        [self.store sortBirthdaysInOrder:self.store.currentSortDirection];
+        [self sortTableViewWithOriginalArray:originalList];
     }];
     self.personBeingEdited = nil;
 }
@@ -118,12 +119,10 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView beginUpdates];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.store removePersonAtIndex:indexPath.row];
     }
-    [self.tableView endUpdates];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,7 +162,6 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //Credit for this technique to http://blog.neuwert-media.com/2013/05/animated-sorting-in-uitableview/
     NSArray *originalList = [self.store.people copy];
     
     if (buttonIndex == BirthdayListSortAscending) {
@@ -171,6 +169,13 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
     } else if (buttonIndex == BirthdayListSortDescending) {
         [self.store sortBirthdaysInDescendingDaysRemaing];
     }
+    
+    [self sortTableViewWithOriginalArray:originalList];
+}
+
+- (void)sortTableViewWithOriginalArray:(NSArray *)originalList
+{
+    //Credit for this technique to http://blog.neuwert-media.com/2013/05/animated-sorting-in-uitableview/
     
     [self.tableView beginUpdates];
     
@@ -188,6 +193,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
     }
     
     [self.tableView endUpdates];
+    
 }
 
 @end
