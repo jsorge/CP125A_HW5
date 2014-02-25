@@ -7,8 +7,8 @@
 //
 
 #import "JMSPersonStore.h"
-//#import "JMSPersonBirthday.h"
 #import "Person.h"
+#import "JMSPersonLoader.h"
 
 @interface JMSPersonStore ()
 
@@ -17,19 +17,16 @@
 @end
 
 @implementation JMSPersonStore
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _loader = [[JMSPersonLoader alloc] init];
+    }
+    return self;
+}
+
 #pragma mark - Properties
-//- (NSMutableArray *)people
-//{
-//    if (!_people) {
-//        _people = [NSMutableArray array];
-//        
-//        JMSPersonBirthday *jared = [[JMSPersonBirthday alloc] initWithName:@"Jared" birthdate:[self.dateFormatter dateFromString:@"01/02/1983"]];
-//        JMSPersonBirthday *emily = [[JMSPersonBirthday alloc] initWithName:@"Emily" birthdate:[self.dateFormatter dateFromString:@"10/31/1978"]];
-//        JMSPersonBirthday *atticus = [[JMSPersonBirthday alloc] initWithName:@"Atticus" birthdate:[self.dateFormatter dateFromString:@"12/30/2013"]];
-//        [_people addObjectsFromArray:@[jared, emily, atticus]];
-//    }
-//    return _people;
-//}
 - (NSFetchedResultsController *)people
 {
     if (!_people) {
@@ -38,6 +35,10 @@
                                 withPredicate:nil
                                       groupBy:nil
                                      delegate:nil];
+        
+        if ([_people.fetchedObjects count] == 0) {
+            [self.loader start];
+        }
     }
     return _people;
 }
@@ -55,31 +56,28 @@
 #pragma mark - API
 - (void)sortBirthdaysInAscendingDaysRemaing
 {
-//    [self.people sortUsingComparator:^NSComparisonResult(JMSPersonBirthday *person1, JMSPersonBirthday *person2) {
-//        if (person1.daysUntilBirthday < person2.daysUntilBirthday) {
-//            return (NSComparisonResult)NSOrderedAscending;
-//        } else if (person1.daysUntilBirthday > person2.daysUntilBirthday) {
-//            return (NSComparisonResult)NSOrderedDescending;
-//        }
-//        return (NSComparisonResult)NSOrderedSame;
-//    }];
+    NSFetchRequest *fetchRequest = self.people.fetchRequest;
+    NSSortDescriptor *newSort = [NSSortDescriptor sortDescriptorWithKey:@"daysUntilNextBirthday" ascending:YES];
+    
+    fetchRequest.sortDescriptors = @[newSort];
+    
+    NSError *error;
+    [self.people performFetch:&error];
 }
 
 - (void)sortBirthdaysInDescendingDaysRemaing
 {
-//    [self.people sortUsingComparator:^NSComparisonResult(JMSPersonBirthday *person1, JMSPersonBirthday *person2) {
-//        if (person1.daysUntilBirthday > person2.daysUntilBirthday) {
-//            return (NSComparisonResult)NSOrderedAscending;
-//        } else if (person1.daysUntilBirthday < person2.daysUntilBirthday) {
-//            return (NSComparisonResult)NSOrderedDescending;
-//        }
-//        return (NSComparisonResult)NSOrderedSame;
-//    }];
+    NSFetchRequest *fetchRequest = self.people.fetchRequest;
+    NSSortDescriptor *newSort = [NSSortDescriptor sortDescriptorWithKey:@"daysUntilNextBirthday" ascending:NO];
+    
+    fetchRequest.sortDescriptors = @[newSort];
+    
+    NSError *error;
+    [self.people performFetch:&error];
 }
 
 - (void)removePersonAtIndex:(NSInteger)index
 {
-//    [self.people removeObjectAtIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     Person *person = [self.people objectAtIndexPath:indexPath];
     [person MR_deleteEntity];

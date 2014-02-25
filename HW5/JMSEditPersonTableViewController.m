@@ -7,7 +7,7 @@
 //
 
 #import "JMSEditPersonTableViewController.h"
-#import "JMSPersonBirthday.h"
+#import "Person.h"
 
 @interface JMSEditPersonTableViewController () 
 
@@ -40,9 +40,10 @@
     [super viewDidLoad];
     
     if (!self.personBirthday) {
-        self.personBirthday = [[JMSPersonBirthday alloc] init];
+        self.personBirthday = [Person MR_createEntity];
+        self.personBirthday.birthdate = [NSDate date];
+        self.birthdayLabel.text = [self.dateFormatter stringFromDate:self.personBirthday.birthdate];
         self.creatingNewPerson = YES;
-        self.birthdayLabel.text = [self.dateFormatter stringFromDate:[NSDate date]];
     } else {
         self.birthdayLabel.text = [self.dateFormatter stringFromDate:self.personBirthday.birthdate];
         self.nameTextField.text = self.personBirthday.name;

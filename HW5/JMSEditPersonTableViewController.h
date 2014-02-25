@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @protocol JMSEditPersonDelegate;
-@class JMSPersonBirthday;
+@class Person;
 
 @interface JMSEditPersonTableViewController : UITableViewController
 
 @property (weak,nonatomic)id<JMSEditPersonDelegate>delegate;
-@property (strong, nonatomic)JMSPersonBirthday *personBirthday;
+@property (strong, nonatomic)Person *personBirthday;
 
 @end
 

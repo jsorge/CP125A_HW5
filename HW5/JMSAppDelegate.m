@@ -12,7 +12,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"cp125_hw5"];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"cp125a_hw5"];
     
     return YES;
 }

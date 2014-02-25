@@ -7,19 +7,22 @@
 //
 
 #import "JMSMainViewController.h"
-#import "JMSPersonBirthday.h"
 #import "JMSPersonStore.h"
 #import "JMSBirthdayTableViewCell.h"
 #import "JMSEditPersonTableViewController.h"
+#import "Person.h"
+#import "JMSPersonLoader.h"
 
-@interface JMSMainViewController () <UITableViewDataSource, UITableViewDelegate, JMSEditPersonDelegate, UIActionSheetDelegate>
+@interface JMSMainViewController () <UITableViewDataSource, UITableViewDelegate, JMSEditPersonDelegate, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, JMSPersonLoaderDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sortButton;
 
 @property (strong, nonatomic)JMSPersonStore *store;
 @property (strong, nonatomic)NSDateFormatter *dateFormatter;
-@property (strong, nonatomic)JMSPersonBirthday *personBeingEdited;
+@property (strong, nonatomic)Person *personBeingEdited;
+@property (strong, nonatomic)UIProgressView *progressView;
 @end
 
 NSString *const ADD_NEW_SEGUE = @"addNewSegue";
@@ -36,6 +39,8 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 {
     if (!_store) {
         _store = [[JMSPersonStore alloc] init];
+        _store.loader.delegate = self;
+        _store.people.delegate = self;
     }
     return _store;
 }
@@ -72,9 +77,8 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 
 - (void)editPersonViewControllerdidSaveNew:(JMSEditPersonTableViewController *)controller
 {
-    [self.store.people addObject:controller.personBirthday];
     [self dismissViewControllerAnimated:YES completion:^{
-        NSIndexPath *newRow = [NSIndexPath indexPathForRow:[self.store.people indexOfObject:controller.personBirthday] inSection:0];
+        NSIndexPath *newRow = [self.store.people indexPathForObject:controller.personBirthday];
         
         [self.tableView beginUpdates];
         [self.tableView insertRowsAtIndexPaths:@[newRow] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -84,7 +88,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 
 - (void)editPersonViewControllerDidUpdateExisting:(JMSEditPersonTableViewController *)controller
 {
-    NSIndexPath *editedRow = [NSIndexPath indexPathForRow:[self.store.people indexOfObject:self.personBeingEdited] inSection:0];
+    NSIndexPath *editedRow = [self.store.people indexPathForObject:controller.personBirthday];
     [self dismissViewControllerAnimated:YES completion:^{
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[editedRow] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -96,7 +100,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.store.people count];
+    return [[self.store.people fetchedObjects] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -106,11 +110,11 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
         cell = [[JMSBirthdayTableViewCell alloc] init];
     }
     
-    JMSPersonBirthday *person = self.store.people[indexPath.row];
+    Person *person = [self.store.people objectAtIndexPath:indexPath];
     
     cell.nameLabel.text = person.name;
     cell.birthdayLabel.text = [self.dateFormatter stringFromDate:person.birthdate];
-    cell.countdownLabel.text = [NSString stringWithFormat:@"%ld", (long)person.daysUntilBirthday];
+    cell.countdownLabel.text = [NSString stringWithFormat:@"%@", person.daysUntilNextBirthday];
     
     return cell;
 }
@@ -133,7 +137,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.personBeingEdited = self.store.people[indexPath.row];
+    self.personBeingEdited = [self.store.people objectAtIndexPath:indexPath];
     [self performSegueWithIdentifier:ADD_NEW_SEGUE sender:nil];
 }
 
@@ -162,32 +166,64 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //Credit for this technique to http://blog.neuwert-media.com/2013/05/animated-sorting-in-uitableview/
-    
-    NSArray *originalList = [self.store.people copy];
-    
     if (buttonIndex == BirthdayListSortAscending) {
         [self.store sortBirthdaysInAscendingDaysRemaing];
     } else if (buttonIndex == BirthdayListSortDescending) {
         [self.store sortBirthdaysInDescendingDaysRemaing];
     }
-    
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
     [self.tableView beginUpdates];
-    
-    NSInteger sourceRow = 0;
-    for (JMSPersonBirthday *person in originalList) {
-        NSInteger destinationRow = [self.store.people indexOfObject:person];
-        
-        if (sourceRow != destinationRow) {
-            NSIndexPath *originalIndexPath = [NSIndexPath indexPathForItem:sourceRow inSection:0];
-            NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:destinationRow inSection:0];
-            [self.tableView moveRowAtIndexPath:originalIndexPath toIndexPath:newIndexPath];
-        }
-        
-        sourceRow++;
-    }
-    
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
     [self.tableView endUpdates];
 }
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    switch (type) {
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+#pragma mark - JMSPersonLoaderDelegate
+- (void)personLoaderDidBeginParsingData:(JMSPersonLoader *)loader withTotalRows:(NSInteger)totalRows;
+{
+    self.progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    [self.toolbar addSubview:self.progressView];
+}
+
+- (void)personLoader:(JMSPersonLoader *)loader didParseDataWithProgress:(NSInteger)updatedProgress;
+{
+    [self.progressView setProgress:(self.progressView.progress + updatedProgress) animated:YES];
+}
+
+- (void)personLoaderDidEndParsingData:(JMSPersonLoader *)loader;
+{
+    [self.progressView removeFromSuperview];
+    self.progressView = nil;
+}
+
 
 @end

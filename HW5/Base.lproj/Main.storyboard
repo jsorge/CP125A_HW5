@@ -72,6 +72,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButton" destination="Oma-Xx-U9u" id="xdm-hY-bQj"/>
+                        <outlet property="sortButton" destination="Zbe-JB-ah9" id="X8y-nu-E8a"/>
                         <outlet property="tableView" destination="Ml3-zE-g4L" id="jRs-xT-k26"/>
                         <outlet property="toolbar" destination="kyi-xX-Rwf" id="C7x-jt-f4K"/>
                     </connections>

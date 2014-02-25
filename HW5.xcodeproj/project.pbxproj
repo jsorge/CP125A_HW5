@@ -10,9 +10,10 @@
 		489E243A412B4D66B4030BC8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 248A74BCB2464C5A999C114A /* libPods.a */; };
 		93012ED518AFF445003661CE /* JMSEditPersonTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93012ED418AFF445003661CE /* JMSEditPersonTableViewController.m */; };
 		930847A918B7A6BB00F0B374 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 930847A718B7A6BB00F0B374 /* CoreDataModel.xcdatamodeld */; };
-		930847AC18B7A6E600F0B374 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 930847AB18B7A6E600F0B374 /* Person.m */; };
 		930847AE18B7A88700F0B374 /* fakenames.json in Resources */ = {isa = PBXBuildFile; fileRef = 930847AD18B7A88700F0B374 /* fakenames.json */; };
 		935FA59B18B7A531002C99B5 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 935FA59A18B7A531002C99B5 /* CoreData.framework */; };
+		9380049618BA500600486356 /* JMSPersonLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9380049518BA500600486356 /* JMSPersonLoader.m */; };
+		9380049C18BAF7A100486356 /* Person+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9380049B18BAF7A100486356 /* Person+Extension.m */; };
 		93B0988C18AAFAA2006AB460 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B0988B18AAFAA2006AB460 /* Foundation.framework */; };
 		93B0988E18AAFAA2006AB460 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B0988D18AAFAA2006AB460 /* CoreGraphics.framework */; };
 		93B0989018AAFAA2006AB460 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B0988F18AAFAA2006AB460 /* UIKit.framework */; };
@@ -27,6 +28,7 @@
 		93B098B518AAFAA2006AB460 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93B098B318AAFAA2006AB460 /* InfoPlist.strings */; };
 		93B098B718AAFAA2006AB460 /* HW5Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B098B618AAFAA2006AB460 /* HW5Tests.m */; };
 		93B098C518AAFB15006AB460 /* JMSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B098C418AAFB15006AB460 /* JMSMainViewController.m */; };
+		93B7B1E318B9CD1600B5646B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B7B1E218B9CD1600B5646B /* Person.m */; };
 		93C371BA18AB38D7007B6972 /* JMSBirthdayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C371B918AB38D7007B6972 /* JMSBirthdayTableViewCell.m */; };
 		93C371BD18AB3A30007B6972 /* JMSPersonBirthday.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C371BC18AB3A30007B6972 /* JMSPersonBirthday.m */; };
 		93C371C318AE6C52007B6972 /* NSDate+UWDateMath.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C371C218AE6C52007B6972 /* NSDate+UWDateMath.m */; };
@@ -49,10 +51,12 @@
 		93012ED318AFF445003661CE /* JMSEditPersonTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSEditPersonTableViewController.h; sourceTree = "<group>"; };
 		93012ED418AFF445003661CE /* JMSEditPersonTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSEditPersonTableViewController.m; sourceTree = "<group>"; };
 		930847A818B7A6BB00F0B374 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		930847AA18B7A6E600F0B374 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = Model/Person.h; sourceTree = "<group>"; };
-		930847AB18B7A6E600F0B374 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = Model/Person.m; sourceTree = "<group>"; };
 		930847AD18B7A88700F0B374 /* fakenames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fakenames.json; sourceTree = "<group>"; };
 		935FA59A18B7A531002C99B5 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9380049418BA500600486356 /* JMSPersonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSPersonLoader.h; sourceTree = "<group>"; };
+		9380049518BA500600486356 /* JMSPersonLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSPersonLoader.m; sourceTree = "<group>"; };
+		9380049A18BAF7A100486356 /* Person+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Person+Extension.h"; path = "Model/Person+Extension.h"; sourceTree = "<group>"; };
+		9380049B18BAF7A100486356 /* Person+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Person+Extension.m"; path = "Model/Person+Extension.m"; sourceTree = "<group>"; };
 		93B0988818AAFAA2006AB460 /* HW5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HW5.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B0988B18AAFAA2006AB460 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93B0988D18AAFAA2006AB460 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,6 +76,8 @@
 		93B098B618AAFAA2006AB460 /* HW5Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HW5Tests.m; sourceTree = "<group>"; };
 		93B098C318AAFB15006AB460 /* JMSMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSMainViewController.h; sourceTree = "<group>"; };
 		93B098C418AAFB15006AB460 /* JMSMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSMainViewController.m; sourceTree = "<group>"; };
+		93B7B1E118B9CD1600B5646B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = Model/Person.h; sourceTree = "<group>"; };
+		93B7B1E218B9CD1600B5646B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = Model/Person.m; sourceTree = "<group>"; };
 		93C371B818AB38D7007B6972 /* JMSBirthdayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSBirthdayTableViewCell.h; sourceTree = "<group>"; };
 		93C371B918AB38D7007B6972 /* JMSBirthdayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMSBirthdayTableViewCell.m; sourceTree = "<group>"; };
 		93C371BB18AB3A30007B6972 /* JMSPersonBirthday.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMSPersonBirthday.h; sourceTree = "<group>"; };
@@ -116,8 +122,12 @@
 				93C371BB18AB3A30007B6972 /* JMSPersonBirthday.h */,
 				93C371BC18AB3A30007B6972 /* JMSPersonBirthday.m */,
 				930847A718B7A6BB00F0B374 /* CoreDataModel.xcdatamodeld */,
-				930847AA18B7A6E600F0B374 /* Person.h */,
-				930847AB18B7A6E600F0B374 /* Person.m */,
+				93B7B1E118B9CD1600B5646B /* Person.h */,
+				93B7B1E218B9CD1600B5646B /* Person.m */,
+				9380049A18BAF7A100486356 /* Person+Extension.h */,
+				9380049B18BAF7A100486356 /* Person+Extension.m */,
+				9380049418BA500600486356 /* JMSPersonLoader.h */,
+				9380049518BA500600486356 /* JMSPersonLoader.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -356,14 +366,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9380049C18BAF7A100486356 /* Person+Extension.m in Sources */,
 				93C371C618AF1EA3007B6972 /* JMSPersonStore.m in Sources */,
 				93C371BD18AB3A30007B6972 /* JMSPersonBirthday.m in Sources */,
-				930847AC18B7A6E600F0B374 /* Person.m in Sources */,
+				93B7B1E318B9CD1600B5646B /* Person.m in Sources */,
 				93B0989818AAFAA2006AB460 /* main.m in Sources */,
 				93C371C318AE6C52007B6972 /* NSDate+UWDateMath.m in Sources */,
 				93C371BA18AB38D7007B6972 /* JMSBirthdayTableViewCell.m in Sources */,
 				930847A918B7A6BB00F0B374 /* CoreDataModel.xcdatamodeld in Sources */,
 				93B098C518AAFB15006AB460 /* JMSMainViewController.m in Sources */,
+				9380049618BA500600486356 /* JMSPersonLoader.m in Sources */,
 				93B0989C18AAFAA2006AB460 /* JMSAppDelegate.m in Sources */,
 				93012ED518AFF445003661CE /* JMSEditPersonTableViewController.m in Sources */,
 			);

@@ -2,7 +2,7 @@
 //  Person.h
 //  HW5
 //
-//  Created by Jared Sorge on 2/21/14.
+//  Created by Jared Sorge on 2/22/14.
 //  Copyright (c) 2014 JMS. All rights reserved.
 //
 
@@ -12,10 +12,8 @@
 
 @interface Person : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSDate * birthdate;
-
-//Custom
-@property (readonly, nonatomic)NSInteger daysUntilNextBirthday;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSNumber * daysUntilNextBirthday;
 
 @end

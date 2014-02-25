@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+@class JMSPersonLoader;
 
 @interface JMSPersonStore : NSObject
 
-//@property (strong, nonatomic)NSMutableArray *people;
 @property (strong, nonatomic)NSFetchedResultsController *people;
+@property (strong, nonatomic)JMSPersonLoader *loader;
 
 #pragma mark - API
 - (void)sortBirthdaysInAscendingDaysRemaing;
