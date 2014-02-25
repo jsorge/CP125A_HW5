@@ -88,15 +88,16 @@
     
     //show the picker row
     NSIndexPath *pickerRow = [NSIndexPath indexPathForRow:1 inSection:1];
-    [self.tableView beginUpdates];
+    [tableView beginUpdates];
     if (self.pickerEnabled) {
-        [self.tableView deleteRowsAtIndexPaths:@[pickerRow] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView deleteRowsAtIndexPaths:@[pickerRow] withRowAnimation:UITableViewRowAnimationFade];
         self.pickerEnabled = NO;
     } else {
         self.pickerEnabled = YES;
-        [self.tableView insertRowsAtIndexPaths:@[pickerRow] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView insertRowsAtIndexPaths:@[pickerRow] withRowAnimation:UITableViewRowAnimationFade];
     }
-    [self.tableView endUpdates];
+    [tableView endUpdates];
+    [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] animated:NO];
 }
 
 #pragma mark - UITableViewDataSource
