@@ -14,6 +14,14 @@
 @property (strong, nonatomic)NSDate *birthdate;
 @property (readonly, nonatomic)NSInteger daysUntilBirthday;
 
+/**
+ *  Creates a new instance.
+ *
+ *  @param name      The person's name
+ *  @param birthdate The person's birth date
+ *
+ *  @return The new instance populated with the person's name and birthdate.
+ */
 - (instancetype)initWithName:(NSString *)name birthdate:(NSDate *)birthdate;
 
 @end

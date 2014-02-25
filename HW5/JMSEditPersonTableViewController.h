@@ -20,8 +20,25 @@
 
 @protocol JMSEditPersonDelegate <NSObject>
 
+/**
+ *  The cancel button on the view controller was tapped.
+ *
+ *  @param controller self
+ */
 - (void)editPersonViewControllerdidCancel:(JMSEditPersonTableViewController *)controller;
+
+/**
+ *  The save button was tapped, and a new person object was created.
+ *
+ *  @param controller self
+ */
 - (void)editPersonViewControllerdidSaveNew:(JMSEditPersonTableViewController *)controller;
+
+/**
+ *  The save button was tapped, and an existing person was updated.
+ *
+ *  @param controller self
+ */
 - (void)editPersonViewControllerDidUpdateExisting:(JMSEditPersonTableViewController *)controller;
 
 @end
