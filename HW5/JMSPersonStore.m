@@ -12,6 +12,7 @@
 @interface JMSPersonStore ()
 
 @property (strong, nonatomic)NSDateFormatter *dateFormatter;
+@property (strong, nonatomic)NSString *currentSortDirection;
 
 @end
 
@@ -26,6 +27,8 @@
         JMSPersonBirthday *emily = [[JMSPersonBirthday alloc] initWithName:@"Emily" birthdate:[self.dateFormatter dateFromString:@"10/31/1978"]];
         JMSPersonBirthday *atticus = [[JMSPersonBirthday alloc] initWithName:@"Atticus" birthdate:[self.dateFormatter dateFromString:@"12/30/2013"]];
         [_people addObjectsFromArray:@[jared, emily, atticus]];
+        
+        [self sortBirthdaysInAscendingDaysRemaing];
     }
     return _people;
 }
@@ -42,6 +45,7 @@
 #pragma mark - API
 - (void)sortBirthdaysInAscendingDaysRemaing
 {
+    self.currentSortDirection = @"ASC";
     [self.people sortUsingComparator:^NSComparisonResult(JMSPersonBirthday *person1, JMSPersonBirthday *person2) {
         if (person1.daysUntilBirthday < person2.daysUntilBirthday) {
             return (NSComparisonResult)NSOrderedAscending;
@@ -54,6 +58,7 @@
 
 - (void)sortBirthdaysInDescendingDaysRemaing
 {
+    self.currentSortDirection = @"DESC";
     [self.people sortUsingComparator:^NSComparisonResult(JMSPersonBirthday *person1, JMSPersonBirthday *person2) {
         if (person1.daysUntilBirthday > person2.daysUntilBirthday) {
             return (NSComparisonResult)NSOrderedAscending;
@@ -67,6 +72,17 @@
 - (void)removePersonAtIndex:(NSInteger)index
 {
     [self.people removeObjectAtIndex:index];
+}
+
+- (void)sortBirthdaysInOrder:(NSString *)order
+{
+    NSAssert([order isEqualToString:@"ASC"] || [order isEqualToString:@"DESC"], @"The order must be ASC or DESC");
+    
+    if ([order isEqualToString:@"ASC"]) {
+        [self sortBirthdaysInAscendingDaysRemaing];
+    } else if ([order isEqualToString:@"DESC"]) {
+        [self sortBirthdaysInDescendingDaysRemaing];
+    }
 }
 
 @end

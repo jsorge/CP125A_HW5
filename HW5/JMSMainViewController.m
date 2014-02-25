@@ -73,6 +73,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 - (void)editPersonViewControllerdidSaveNew:(JMSEditPersonTableViewController *)controller
 {
     [self.store.people addObject:controller.personBirthday];
+    [self.store sortBirthdaysInOrder:self.store.currentSortDirection];
     [self dismissViewControllerAnimated:YES completion:^{
         NSIndexPath *newRow = [NSIndexPath indexPathForRow:[self.store.people indexOfObject:controller.personBirthday] inSection:0];
         
@@ -140,7 +141,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 #pragma mark - IBActions
 - (IBAction)sortButtonTapped:(id)sender
 {
-    UIActionSheet *sortSheet = [[UIActionSheet alloc] initWithTitle:@"Sort Days Remaining"
+    UIActionSheet *sortSheet = [[UIActionSheet alloc] initWithTitle:@"Sort By Days Remaining"
                                                            delegate:self
                                                   cancelButtonTitle:@"Cancel"
                                              destructiveButtonTitle:nil
@@ -163,7 +164,6 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Credit for this technique to http://blog.neuwert-media.com/2013/05/animated-sorting-in-uitableview/
-    
     NSArray *originalList = [self.store.people copy];
     
     if (buttonIndex == BirthdayListSortAscending) {

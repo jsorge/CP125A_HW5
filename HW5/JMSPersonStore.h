@@ -11,6 +11,7 @@
 @interface JMSPersonStore : NSObject
 
 @property (strong, nonatomic)NSMutableArray *people;
+@property (strong, readonly)NSString *currentSortDirection;
 
 #pragma mark - API
 /**
@@ -29,5 +30,12 @@
  *  @param index The index of the object to be removed
  */
 - (void)removePersonAtIndex:(NSInteger)index;
+
+/**
+ *  Sorts the people array in the order passed in
+ *
+ *  @param order Either "ASC" (ascending) or "DESC" (descending)
+ */
+- (void)sortBirthdaysInOrder:(NSString *)order;
 
 @end
