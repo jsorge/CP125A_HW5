@@ -120,8 +120,8 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.store removePersonAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
@@ -173,6 +173,7 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
     [self sortTableViewWithOriginalArray:originalList];
 }
 
+#pragma mark - Private
 - (void)sortTableViewWithOriginalArray:(NSArray *)originalList
 {
     //Credit for this technique to http://blog.neuwert-media.com/2013/05/animated-sorting-in-uitableview/

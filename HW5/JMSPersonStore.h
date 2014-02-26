@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, JMSBirthdaySortOrder){
+    JMSBirthdaySortAscending,
+    JMSBirthdaySortDescending
+};
+
 @interface JMSPersonStore : NSObject
 
 @property (strong, nonatomic)NSMutableArray *people;
-@property (strong, readonly)NSString *currentSortDirection;
+@property (nonatomic, readonly)JMSBirthdaySortOrder currentSortDirection;
 
 #pragma mark - API
 /**
@@ -34,8 +39,8 @@
 /**
  *  Sorts the people array in the order passed in
  *
- *  @param order Either "ASC" (ascending) or "DESC" (descending)
+ *  @param order The sort direction, one of the JMSBirthdaySortOrder type
  */
-- (void)sortBirthdaysInOrder:(NSString *)order;
+- (void)sortBirthdaysInOrder:(JMSBirthdaySortOrder)order;
 
 @end

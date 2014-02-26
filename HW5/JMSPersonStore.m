@@ -12,9 +12,12 @@
 @interface JMSPersonStore ()
 
 @property (strong, nonatomic)NSDateFormatter *dateFormatter;
-@property (strong, nonatomic)NSString *currentSortDirection;
+@property (readwrite, nonatomic)JMSBirthdaySortOrder currentSortDirection;
 
 @end
+
+NSString *birthdaySortAscend = @"ASC";
+NSString *birthdaySortDescend = @"DESC";
 
 @implementation JMSPersonStore
 #pragma mark - Properties
@@ -45,7 +48,7 @@
 #pragma mark - API
 - (void)sortBirthdaysInAscendingDaysRemaing
 {
-    self.currentSortDirection = @"ASC";
+    self.currentSortDirection = JMSBirthdaySortAscending;
     [self.people sortUsingComparator:^NSComparisonResult(JMSPersonBirthday *person1, JMSPersonBirthday *person2) {
         if (person1.daysUntilBirthday < person2.daysUntilBirthday) {
             return (NSComparisonResult)NSOrderedAscending;
@@ -58,7 +61,7 @@
 
 - (void)sortBirthdaysInDescendingDaysRemaing
 {
-    self.currentSortDirection = @"DESC";
+    self.currentSortDirection = JMSBirthdaySortDescending;
     [self.people sortUsingComparator:^NSComparisonResult(JMSPersonBirthday *person1, JMSPersonBirthday *person2) {
         if (person1.daysUntilBirthday > person2.daysUntilBirthday) {
             return (NSComparisonResult)NSOrderedAscending;
@@ -74,13 +77,13 @@
     [self.people removeObjectAtIndex:index];
 }
 
-- (void)sortBirthdaysInOrder:(NSString *)order
+- (void)sortBirthdaysInOrder:(JMSBirthdaySortOrder)order
 {
-    NSAssert([order isEqualToString:@"ASC"] || [order isEqualToString:@"DESC"], @"The order must be ASC or DESC");
+    NSAssert(order == JMSBirthdaySortAscending || order == JMSBirthdaySortDescending, @"The order must be JMSBirthdaySortAscending or JMSBirthdaySortDescending");
     
-    if ([order isEqualToString:@"ASC"]) {
+    if (order == JMSBirthdaySortAscending) {
         [self sortBirthdaysInAscendingDaysRemaing];
-    } else if ([order isEqualToString:@"DESC"]) {
+    } else if (order == JMSBirthdaySortDescending) {
         [self sortBirthdaysInDescendingDaysRemaing];
     }
 }

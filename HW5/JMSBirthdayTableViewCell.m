@@ -79,7 +79,7 @@ NSString *const fontName = @"Avenir";
 {
     [super updateConstraints];
     
-    if (self.constraints.count > 0) {
+    if ([self.constraints count] > 0) {
         [self.contentView removeConstraints:self.constraints];
     }
     [self.constraints removeAllObjects];
