@@ -10,7 +10,7 @@
 
 @interface JMSPersonBirthday : NSObject
 
-@property (strong, nonatomic)NSString *name;
+@property (copy, nonatomic)NSString *name;
 @property (strong, nonatomic)NSDate *birthdate;
 @property (readonly, nonatomic)NSInteger daysUntilBirthday;
 

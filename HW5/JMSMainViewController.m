@@ -12,6 +12,8 @@
 #import "JMSBirthdayTableViewCell.h"
 #import "JMSEditPersonTableViewController.h"
 
+NSString *const ADD_NEW_SEGUE = @"addNewSegue";
+
 @interface JMSMainViewController () <UITableViewDataSource, UITableViewDelegate, JMSEditPersonDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
@@ -21,13 +23,6 @@
 @property (strong, nonatomic)NSDateFormatter *dateFormatter;
 @property (strong, nonatomic)JMSPersonBirthday *personBeingEdited;
 @end
-
-NSString *const ADD_NEW_SEGUE = @"addNewSegue";
-
-typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
-    BirthdayListSortAscending,
-    BirthdayListSortDescending
-};
 
 @implementation JMSMainViewController
 
@@ -137,6 +132,18 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
     [self performSegueWithIdentifier:ADD_NEW_SEGUE sender:nil];
 }
 
+- (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView setEditing:YES animated:YES];
+    [self updateEditButtonLabel];
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView setEditing:NO animated:YES];
+    [self updateEditButtonLabel];
+}
+
 #pragma mark - IBActions
 - (IBAction)sortButtonTapped:(id)sender
 {
@@ -152,11 +159,10 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 {
     if (self.tableView.editing) {
         [self.tableView setEditing:NO animated:YES];
-        [self.editButton setTitle:@"Edit"];
     } else {
         [self.tableView setEditing:YES animated:YES];
-        [self.editButton setTitle:@"Done"];
     }
+    [self updateEditButtonLabel];
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -164,9 +170,9 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
 {
     NSArray *originalList = [self.store.people copy];
     
-    if (buttonIndex == BirthdayListSortAscending) {
+    if (buttonIndex == JMSBirthdaySortAscending) {
         [self.store sortBirthdaysInAscendingDaysRemaing];
-    } else if (buttonIndex == BirthdayListSortDescending) {
+    } else if (buttonIndex == JMSBirthdaySortDescending) {
         [self.store sortBirthdaysInDescendingDaysRemaing];
     }
     
@@ -195,6 +201,15 @@ typedef NS_ENUM(NSInteger, BirthdayListSortDirection){
     
     [self.tableView endUpdates];
     
+}
+
+- (void)updateEditButtonLabel
+{
+    if (self.tableView.editing) {
+        [self.editButton setTitle:@"Done"];
+    } else {
+        [self.editButton setTitle:@"Edit"];
+    }
 }
 
 @end
